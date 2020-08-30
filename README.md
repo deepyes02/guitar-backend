@@ -1,24 +1,11 @@
-# myvueapp
+# Preinstallation
+I ditched npm and used yarn to manage the packages and run the scripts. To make sure that hot reload works properly in the backend, i think you have to install nodemon globally:
+yarn add global nodemon
 
-## Project setup
-```
-yarn install
-```
+# yarn start
+will simply start the server.
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+#make use of postman
+to better understand the CRUD operations
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+........to be continued

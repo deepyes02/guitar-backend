@@ -19,8 +19,4 @@ sequelize.sync().then(()=> {
   console.log(`Server listening on http://localhost:${config.port}`);
 })
 
-// app.listen(config.port, () => {
-//   console.info(`Server listening on http://localhost:${config.port}`);
-// });
-
 

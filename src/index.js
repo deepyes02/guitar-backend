@@ -2,19 +2,39 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
-
 const app = express();
 
-app.use(morgan('combined'));
-app.use(bodyParser.json());
-app.use(cors());
+const User = require ("./database");
 
-//post request
-app.post('/register', (req,res) => {
-  res.send({
-    message: `Thank you for registering with us ${req.body.name}. We will be sending you monthly updates at your email address ${req.body.email}. And fuck we don't care about your privacy so here's your password ${req.body.password}`
-  })
-})
+//create the table with User if not exists
+const createUserModel = async()=>{
+  await User.sync();
+}
+createUserModel();
+
+async function createNewUser(userName,firstName,lastName){
+  try{
+  let newUser = User.build({userName:userName, firstName:firstName, lastName:lastName})
+  await newUser.save();
+  console.log(`New user '${userName}' was created. id:'${last.id}'`)
+  } catch(error){
+    console.error(error);
+  }
+}
+
+createNewUser('rajesh', 'Rajesh', 'Dhakal');
+
+app.use(morgan('combined'));
+
+// parse requests of content-type - application/json
+app.use(bodyParser.json());
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+var corsOptions = {
+  origin: "http://localhost:8080"
+};
+app.use(cors(corsOptions));
 
 //a simple get request
 app.get('/', (req,res) => {
@@ -22,6 +42,12 @@ app.get('/', (req,res) => {
       message: 'Hello My World'
   });
 });
+
+app.get('/users', (req,res)=>{
+  res.status(200).send({
+    message:'Users'
+  })
+})
 
 const port = process.env.PORT || 8082;
 app.listen(port, ()=>{
